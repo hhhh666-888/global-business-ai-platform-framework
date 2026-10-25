@@ -1,0 +1,19 @@
+dialog.gbap-modal-layer {
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  color: var(--fg-text);
+  background: transparent !important;
+  backdrop-filter: none;
+}
+dialog.gbap-modal-layer:not([open]) { display: none !important; }
+dialog.gbap-modal-layer::backdrop {
+  background: rgba(7, 15, 30, .42);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+html[data-theme='dark'] dialog.gbap-modal-layer::backdrop { background: rgba(2, 8, 20, .64); }
+@media (prefers-reduced-transparency: reduce) {
+  dialog.gbap-modal-layer::backdrop { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}

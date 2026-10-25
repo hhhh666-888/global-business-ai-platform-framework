@@ -1,0 +1,145 @@
+{
+  "id": "gbap.audit-observability.v1",
+  "schemaVersion": 1,
+  "status": "foundation",
+  "compatibility": "additive-within-major",
+  "purpose": "Canonical GBAP-wide contract for audit evidence, technical logs, metrics, health signals, alerts and correlation. Business modules emit through this contract and must not depend on a concrete observability vendor.",
+  "standardsAlignment": {
+    "telemetryModel": "OpenTelemetry-compatible naming and signal separation",
+    "tracePropagation": "W3C Trace Context traceparent/tracestate",
+    "securityLogging": "OWASP Logging Cheat Sheet principles",
+    "note": "The contract is vendor-neutral. OpenTelemetry/Prometheus/Loki/Grafana or other providers may be attached behind adapters later."
+  },
+  "principles": [
+    "audit_is_not_application_log",
+    "canonical_business_code_must_not_know_observability_vendor",
+    "audit_is_append_only_at_application_boundary",
+    "audit_integrity_must_be_detectable",
+    "all_signals_support_request_and_trace_correlation",
+    "secrets_must_not_be_recorded",
+    "access_to_audit_evidence_is_itself_auditable",
+    "telemetry_failure_must_not_silently_corrupt_business_state",
+    "alerting_is_policy_driven_not_scattered_business_code"
+  ],
+  "ids": {
+    "auditEventId": "aud_<uuid-v4>",
+    "logEventId": "log_<uuid-v4>",
+    "metricSampleId": "met_<uuid-v4>",
+    "healthSignalId": "hlth_<uuid-v4>",
+    "alertId": "alr_<uuid-v4>",
+    "requestId": "req_<uuid-v4> or trusted propagated request id",
+    "traceId": "W3C Trace Context trace-id when present",
+    "sessionId": "opaque identifier; raw authentication/session secrets forbidden"
+  },
+  "commonEnvelope": {
+    "required": ["id", "occurredAt", "service", "environment", "signal"],
+    "optional": ["organizationId", "workspaceId", "requestId", "traceId", "spanId", "sessionIdHash", "source", "attributes"],
+    "environmentAllowed": ["dev", "test", "uat", "production", "local"],
+    "sourceAllowed": ["ui", "api", "worker", "scheduler", "admin", "automation", "provider", "system", "cli"]
+  },
+  "signals": {
+    "audit": {
+      "canonical": true,
+      "required": ["actor", "action", "resource", "outcome"],
+      "optional": ["before", "after", "reason", "network", "risk", "retentionClass"],
+      "outcomeAllowed": ["success", "denied", "failed"],
+      "actorKinds": ["user", "service", "automation", "system"],
+      "riskAllowed": ["normal", "privileged", "security"],
+      "integrity": "sha256_hash_chain",
+      "applicationMutability": "append_only"
+    },
+    "log": {
+      "canonical": false,
+      "required": ["severity", "body"],
+      "severityAllowed": ["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"],
+      "purpose": "technical diagnosis and runtime operations; never substitute for audit evidence"
+    },
+    "metric": {
+      "canonical": false,
+      "required": ["name", "instrument", "value"],
+      "instrumentAllowed": ["counter", "updowncounter", "gauge", "histogram"],
+      "unitGuidance": "UCUM/OpenTelemetry-compatible unit metadata; do not encode unit in metric name unless semantically required"
+    },
+    "health": {
+      "canonical": false,
+      "required": ["component", "status"],
+      "statusAllowed": ["UP", "DEGRADED", "DOWN", "UNKNOWN"],
+      "optional": ["latencyMs", "detail", "dependencies"]
+    },
+    "alert": {
+      "canonical": true,
+      "required": ["fingerprint", "severity", "status", "title", "ruleId"],
+      "severityAllowed": ["INFO", "WARNING", "CRITICAL"],
+      "statusAllowed": ["OPEN", "ACKNOWLEDGED", "RESOLVED"],
+      "deduplication": "same fingerprint updates lifecycle instead of creating alert storms"
+    }
+  },
+  "auditTaxonomy": {
+    "identity": ["auth.login.success", "auth.login.failed", "auth.logout", "identity.user.create", "identity.user.update", "identity.user.disable"],
+    "authorization": ["authorization.denied", "role.assign", "role.revoke", "permission.change"],
+    "business": ["entity.create", "entity.update", "entity.delete", "entity.restore", "bulk.import", "bulk.export"],
+    "configuration": ["config.change", "provider.register", "provider.enable", "provider.disable", "provider.unregister"],
+    "operations": ["backup.start", "backup.complete", "backup.failed", "restore.start", "restore.complete", "restore.failed", "update.start", "update.complete", "update.failed", "rollback.start", "rollback.complete", "rollback.failed"],
+    "ai": ["ai.request", "ai.tool.invoke", "ai.tool.denied", "knowledge.access", "knowledge.change"],
+    "audit": ["audit.read", "audit.export", "audit.integrity.verify", "audit.integrity.failed"]
+  },
+  "retention": {
+    "auditStandard": {"minimumDays": 730, "automaticHardDelete": false},
+    "auditPrivileged": {"minimumDays": 1095, "automaticHardDelete": false},
+    "auditSecurity": {"minimumDays": 1095, "automaticHardDelete": false},
+    "technicalInfo": {"defaultDays": 30},
+    "technicalError": {"defaultDays": 90},
+    "metrics": {"defaultDays": 30},
+    "health": {"defaultDays": 90},
+    "alerts": {"defaultDays": 365},
+    "rule": "Legal, contractual or country requirements may extend retention. Shortening audit retention requires an explicit governance decision; automatic deletion of audit evidence is forbidden in the minimum implementation."
+  },
+  "dataProtection": {
+    "forbiddenDirectFields": [
+      "password", "passwd", "authorization", "accessToken", "refreshToken", "apiKey", "secret", "clientSecret", "privateKey", "cookie", "set-cookie", "connectionString"
+    ],
+    "handling": "remove_or_redact_before_persistence",
+    "sessionIdentifiers": "store hash or opaque non-secret identifier only",
+    "beforeAfter": "record only fields necessary to explain material change; apply field-level redaction before persistence"
+  },
+  "permissions": {
+    "substrate-user": ["emit_business_audit_indirectly"],
+    "substrate-manager": ["read_scope_limited_business_audit_when_enabled"],
+    "substrate-admin": ["read_platform_audit", "read_logs", "read_health", "read_alerts", "acknowledge_alerts", "export_audit_with_reason"],
+    "ops-service": ["emit_logs", "emit_metrics", "emit_health", "evaluate_alerts"],
+    "backup-service": ["emit_backup_audit", "emit_backup_health"],
+    "rule": "No role receives application-level update/delete permission over persisted audit events. Host/database administrators remain an external trust boundary and tamper must be detectable."
+  },
+  "storageBoundary": {
+    "minimumRunnable": "dedicated SQLite observability database, separate from CRM/provider state",
+    "audit": "append-only application interface plus per-database SHA-256 hash chain",
+    "telemetry": "replaceable sink behind adapter boundary",
+    "productionTarget": "centralized durable audit store plus OpenTelemetry-compatible telemetry pipeline; provider selection is a later deployment decision",
+    "businessCodeDependency": "contract_and_emitter_only"
+  },
+  "interfaces": {
+    "emitAudit": "emitAudit(event) -> persisted audit event",
+    "emitLog": "emitLog(record) -> persisted/logged record",
+    "recordMetric": "recordMetric(sample) -> persisted/exported sample",
+    "recordHealth": "recordHealth(signal) -> persisted/exported health signal",
+    "raiseAlert": "raiseAlert(alert) -> deduplicated alert lifecycle",
+    "resolveAlert": "resolveAlert(fingerprint, context) -> resolved alert",
+    "verifyAuditChain": "verifyAuditChain() -> PASS or first integrity failure",
+    "sweepTelemetryRetention": "sweepTelemetryRetention(now) -> counts; never deletes audit events"
+  },
+  "baselineAlertRules": [
+    {"id":"gbap.api.unavailable","severity":"CRITICAL","condition":"API DOWN for >= 3 minutes"},
+    {"id":"gbap.database.unhealthy","severity":"CRITICAL","condition":"database DOWN for >= 1 minute"},
+    {"id":"gbap.backup.stale","severity":"WARNING","condition":"no successful governed source backup for > 26 hours"},
+    {"id":"gbap.backup.stale.critical","severity":"CRITICAL","condition":"no successful governed source backup for > 50 hours"},
+    {"id":"gbap.mirror.stale","severity":"WARNING","condition":"no PASS mirror verification for > 27 hours"},
+    {"id":"gbap.disk.utilization.warning","severity":"WARNING","condition":"disk used ratio >= 0.80"},
+    {"id":"gbap.disk.utilization.critical","severity":"CRITICAL","condition":"disk used ratio >= 0.90"},
+    {"id":"gbap.auth.failures.spike","severity":"WARNING","condition":"authentication failures >= 10 in 5 minutes"},
+    {"id":"gbap.provider.unavailable","severity":"WARNING","condition":"required provider unavailable for >= 5 minutes"}
+  ],
+  "migration": {
+    "existingSubstrateAuditEvent": "legacy evidence remains intact; later adapter/migration maps legacy rows into this v1 envelope without silent deletion or rewrite",
+    "crmBinding": "not part of foundation acceptance; CRM and later modules integrate only after the common substrate contract is accepted"
+  }
+}

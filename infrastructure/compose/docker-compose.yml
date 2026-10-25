@@ -1,0 +1,65 @@
+name: global-business-ai-platform
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.2
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: bootstrap-admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: bootstrap-admin-change-me
+    volumes:
+      - ../keycloak/gbap-realm.json:/opt/keycloak/data/import/gbap-realm.json:ro
+    ports:
+      - "127.0.0.1:8082:8080"
+    mem_limit: 1g
+    restart: unless-stopped
+
+  web:
+    build: ../../apps/web
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ../..
+      dockerfile: apps/api/Dockerfile
+    environment:
+      PORT: "8081"
+      DB_PATH: /data/substrate.db
+      OBSERVABILITY_DB_PATH: /data/observability.db
+      CORS_ORIGIN: http://localhost:8080
+      OIDC_ISSUER: http://localhost:8082/realms/gbap
+      OIDC_JWKS_URL_INTERNAL: http://keycloak:8080/realms/gbap/protocol/openid-connect/certs
+      OIDC_CLIENT_ID: gbap-web
+      SUBSTRATE_ENV: local
+    volumes:
+      - substrate-data:/data
+    ports:
+      - "127.0.0.1:8081:8081"
+    depends_on:
+      - keycloak
+    restart: unless-stopped
+
+  worker:
+    build: ../../apps/worker
+    environment:
+      DB_PATH: /data/substrate.db
+      HEALTH_INTERVAL_MS: "5000"
+    volumes:
+      - substrate-data:/data
+    depends_on:
+      - api
+      - reference-provider
+    restart: unless-stopped
+
+  reference-provider:
+    build: ../../providers/reference-provider
+    environment:
+      PORT: "8090"
+    restart: unless-stopped
+
+volumes:
+  substrate-data:

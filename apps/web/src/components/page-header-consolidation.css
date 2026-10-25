@@ -1,0 +1,144 @@
+/* Stage 3.7 Batch 10 — Page Header Consolidation.
+   The topbar owns one authoritative page title and one real page-action slot.
+   Existing business handlers remain in their surfaces. Workbench actions are rendered
+   directly into the slot through React Portal; legacy surfaces still use the bridge. */
+
+.top-actions {
+  min-width: 0;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+
+.page-action-slot {
+  min-height: 32px;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.page-action-slot:empty {
+  display: none;
+}
+
+.page-action-slot > .toolbar-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+/* Stage 3.7 Batch 11 — one high-contrast primary-action language in both appearances.
+   Use a stable brand blue rather than the lighter dark-theme accent token so white copy
+   remains readable. The selector is intentionally scoped to page-level primary actions. */
+.page-action-slot .page-primary-action,
+.page-primary-action {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 12px;
+  border: 1px solid #2f6fed;
+  border-radius: 8px;
+  background: #2f6fed;
+  color: #fff !important;
+  font-weight: 650;
+  box-shadow: 0 5px 14px rgba(47, 111, 237, .18);
+}
+
+.page-action-slot .page-primary-action *,
+.page-primary-action * {
+  color: inherit !important;
+}
+
+.page-action-slot .page-primary-action:hover,
+.page-primary-action:hover {
+  border-color: #245bc7;
+  background: #245bc7;
+  color: #fff !important;
+  box-shadow: 0 6px 16px rgba(36, 91, 199, .22);
+}
+
+.page-action-slot .page-primary-action:focus-visible,
+.page-primary-action:focus-visible {
+  color: #fff !important;
+  box-shadow: 0 0 0 3px rgba(108, 156, 255, .24), 0 5px 14px rgba(47, 111, 237, .18);
+}
+
+.page-action-slot .page-primary-action:disabled,
+.page-primary-action:disabled {
+  opacity: .58;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+html[data-theme='dark'] .page-action-slot .page-primary-action,
+html[data-theme='dark'] .page-primary-action,
+html[data-theme='dark'] .page-action-slot .page-primary-action * {
+  color: #fff !important;
+}
+
+/* The source controls remain React-owned and keep all business handlers, but are not
+   user-visible once their structural topbar clone is active. */
+.toolbar-actions[data-page-action-source='true'] {
+  display: none !important;
+}
+
+.content > [data-surface] > .object-toolbar:has(> .toolbar-actions[data-page-action-source='true']),
+.content > [data-surface] > .panel:first-child > .object-toolbar:has(> .toolbar-actions[data-page-action-source='true']) {
+  min-height: 32px;
+  padding: 5px 14px;
+  border-bottom-color: var(--fg-border);
+}
+
+.content > [data-surface] > .object-toolbar:has(> .toolbar-actions[data-page-action-source='true']) > div:first-child > h2,
+.content > [data-surface] > .panel:first-child > .object-toolbar:has(> .toolbar-actions[data-page-action-source='true']) > div:first-child > h2 {
+  display: none;
+}
+
+.content > [data-surface] > .object-toolbar:has(> .toolbar-actions[data-page-action-source='true']) > div:first-child > p,
+.content > [data-surface] > .panel:first-child > .object-toolbar:has(> .toolbar-actions[data-page-action-source='true']) > div:first-child > p {
+  margin: 0;
+  color: var(--fg-muted);
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+@media (min-width: 1100px) {
+  .global-search-shell {
+    width: min(280px, 22vw);
+  }
+
+  .content > [data-surface='real-workbench'] > .workbench-heading.workbench-actions-portaled {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1099px) {
+  .topbar {
+    flex-wrap: wrap;
+  }
+
+  .top-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .global-search-shell {
+    flex: 1 1 280px;
+    min-width: 220px;
+  }
+}
+
+@media (max-width: 760px) {
+  .page-action-slot {
+    width: 100%;
+  }
+
+  .page-action-slot > .toolbar-actions {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}

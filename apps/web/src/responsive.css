@@ -1,0 +1,151 @@
+.global-search-shell {
+  position: relative;
+  width: min(310px, 30vw);
+  min-width: 0;
+}
+
+.global-search-shell .global-search-wrap {
+  width: 100%;
+}
+
+@media (max-width: 1100px) {
+  .global-search-shell {
+    width: min(260px, 28vw);
+  }
+
+  .global-search-wrap {
+    display: flex;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+
+  .sidebar {
+    padding: 8px 5px 6px;
+  }
+
+  .brand-row {
+    height: 44px;
+    grid-template-columns: 1fr;
+    place-items: center;
+    padding: 0;
+  }
+
+  .brand-copy {
+    display: none;
+  }
+
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .quick-search {
+    width: 42px;
+    height: 38px;
+    margin: 5px auto 8px;
+    grid-template-columns: 1fr;
+    place-items: center;
+    padding: 0;
+  }
+
+  .quick-search span,
+  .quick-search kbd {
+    display: none;
+  }
+
+  .sidebar-scroll {
+    padding: 0 0 10px;
+  }
+
+  .nav-section-label {
+    height: 10px;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .nav-section-label.separated {
+    margin-top: 7px;
+    padding-top: 8px;
+  }
+
+  .sidebar-item {
+    height: 40px;
+    grid-template-columns: 1fr;
+    place-items: center;
+    padding: 0;
+  }
+
+  .sidebar-item span:nth-child(2) {
+    display: none;
+  }
+
+  .sidebar-footer {
+    padding-top: 5px;
+  }
+
+  .profile-row {
+    width: 48px;
+    min-height: 42px;
+    margin: 0 auto;
+    grid-template-columns: 1fr;
+    place-items: center;
+    padding: 5px;
+  }
+
+  .profile-row > span,
+  .profile-row > svg {
+    display: none;
+  }
+
+  .profile-row .avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .topbar {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .breadcrumb {
+    display: none;
+  }
+
+  .top-actions {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .global-search-shell {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
+
+  .global-search-wrap {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .content {
+    padding: 12px 10px 22px;
+  }
+
+  .panel-head,
+  .object-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .toolbar-actions {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+}

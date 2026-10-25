@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "dataPolicy": "SYNTHETIC_ONLY",
+  "corpus": [
+    {
+      "id": "zh-pv",
+      "filename": "zh-pv.txt",
+      "language": "zh",
+      "format": "txt",
+      "text": "GBAP 合成测试资料。某工厂屋顶光伏方案使用测试组件 FG-PV-550，单块额定功率 550W。方案重点是白天降低电网购电，并与储能协同。所有名称和参数仅用于检索测试。"
+    },
+    {
+      "id": "en-ess",
+      "filename": "en-ess.txt",
+      "language": "en",
+      "format": "txt",
+      "text": "GBAP synthetic knowledge fixture. The test battery system FG-ESS-215 has a nominal energy capacity of 215 kWh and is used for peak shaving plus short-duration backup. This is not a real product quotation."
+    },
+    {
+      "id": "es-genset",
+      "filename": "es-genset.txt",
+      "language": "es",
+      "format": "txt",
+      "text": "Documento sintético de GBAP. El grupo electrógeno de prueba FG-GEN-800 tiene una potencia nominal de 800 kW y se usa como respaldo para una fábrica durante cortes de red. No representa un producto ni cliente real."
+    },
+    {
+      "id": "zh-case",
+      "filename": "zh-case.txt",
+      "language": "zh",
+      "format": "txt",
+      "text": "GBAP 合成案例。测试项目 FG-CASE-EC-24 位于虚构工业园，采用光伏、储能和备用发电机协同供电，目标是在停电期间维持关键生产设备连续运行。"
+    },
+    {
+      "id": "en-market",
+      "filename": "en-market.txt",
+      "language": "en",
+      "format": "txt",
+      "text": "Synthetic market note FG-MKT-EC. Industrial customers in the fictional scenario prioritize power continuity, transparent lifecycle cost, and local service response when evaluating integrated energy systems."
+    },
+    {
+      "id": "es-transformer",
+      "filename": "es-transformer.txt",
+      "language": "es",
+      "format": "txt",
+      "text": "Ficha sintética FG-TR-1250. El transformador de prueba tiene una capacidad nominal de 1250 kVA y conecta la distribución interna de una planta con el sistema energético integrado."
+    },
+    {
+      "id": "table-storage",
+      "filename": "storage-table.csv",
+      "language": "multilingual",
+      "format": "csv",
+      "text": "item_code,capacity_kwh,backup_hours,application\nFG-TAB-372,372,4,industrial_backup\nFG-TAB-500,500,6,peak_shaving\n"
+    }
+  ],
+  "queries": [
+    {
+      "id": "zh-same",
+      "language": "zh",
+      "category": "same_language",
+      "query": "哪份资料描述了550瓦屋顶光伏组件？",
+      "expectedDocumentId": "zh-pv"
+    },
+    {
+      "id": "en-same",
+      "language": "en",
+      "category": "same_language",
+      "query": "Which document describes a 215 kWh battery used for peak shaving?",
+      "expectedDocumentId": "en-ess"
+    },
+    {
+      "id": "es-same",
+      "language": "es",
+      "category": "same_language",
+      "query": "¿Qué documento describe un generador de respaldo de 800 kW para una fábrica?",
+      "expectedDocumentId": "es-genset"
+    },
+    {
+      "id": "zh-to-es",
+      "language": "zh",
+      "category": "cross_language",
+      "query": "哪份西班牙语资料介绍了1250千伏安的变压器？",
+      "expectedDocumentId": "es-transformer"
+    },
+    {
+      "id": "en-to-zh",
+      "language": "en",
+      "category": "cross_language",
+      "query": "Which Chinese case describes keeping critical production equipment running during a grid outage?",
+      "expectedDocumentId": "zh-case"
+    },
+    {
+      "id": "es-to-en",
+      "language": "es",
+      "category": "cross_language",
+      "query": "¿Qué nota en inglés dice que los clientes industriales priorizan continuidad eléctrica y servicio local?",
+      "expectedDocumentId": "en-market"
+    },
+    {
+      "id": "numeric",
+      "language": "en",
+      "category": "numeric_identifier",
+      "query": "Find the source for FG-ESS-215 and its nominal energy capacity.",
+      "expectedDocumentId": "en-ess"
+    },
+    {
+      "id": "table",
+      "language": "zh",
+      "category": "table_retrieval",
+      "query": "哪一行测试数据的备用时长是4小时、容量是372 kWh？",
+      "expectedDocumentId": "table-storage"
+    }
+  ],
+  "thresholds": {
+    "overallHitAt1": 0.75,
+    "overallHitAt3": 1,
+    "crossLanguageHitAt3": 1,
+    "numericHitAt1": 1,
+    "tableHitAt3": 1,
+    "citationCorrectness": 1
+  }
+}

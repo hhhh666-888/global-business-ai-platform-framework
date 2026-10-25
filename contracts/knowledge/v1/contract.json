@@ -1,0 +1,57 @@
+{
+  "contractId": "gbap.knowledge.v1",
+  "status": "POU_FOUNDATION",
+  "purpose": "Provider-neutral enterprise knowledge ingestion and retrieval contract owned by GBAP/GBAP.",
+  "mandatoryCapabilities": [
+    "knowledge.v1.health",
+    "knowledge.v1.collection.list",
+    "knowledge.v1.collection.create",
+    "knowledge.v1.collection.update",
+    "knowledge.v1.collection.archive",
+    "knowledge.v1.document.ingest",
+    "knowledge.v1.document.status",
+    "knowledge.v1.document.remove",
+    "knowledge.v1.search",
+    "knowledge.v1.chunk.get"
+  ],
+  "canonicalTypes": [
+    "KnowledgeCollection",
+    "KnowledgeDocument",
+    "KnowledgeDocumentVersion",
+    "KnowledgeAcl",
+    "KnowledgeBusinessLink",
+    "KnowledgeIngestionRun"
+  ],
+  "ownership": {
+    "gbap": [
+      "human identity and authorization",
+      "canonical knowledge IDs",
+      "source authority and lifecycle",
+      "classification and ACL",
+      "business relations",
+      "provider mappings and audit"
+    ],
+    "provider": [
+      "parsed representations",
+      "chunks",
+      "embeddings and indexes",
+      "ranking state",
+      "provider-local derived copies required for retrieval"
+    ]
+  },
+  "browserBoundary": "Browser callers use GBAP knowledge APIs only. Direct knowledge.v1 provider invocation and provider credentials are forbidden to browser callers.",
+  "searchRequest": {
+    "required": ["query", "providerCollectionIds"],
+    "optional": ["providerDocumentIds", "metadataFilters", "topK", "minimumScore", "correlationId"]
+  },
+  "searchResult": {
+    "providerAdapterShape": ["documentExternalId", "chunkExternalId", "text", "score", "page", "section", "sourceTitle"],
+    "browserShapeRule": "GBAP maps provider identities back to canonical knowledgeDocumentId/version IDs, rechecks authorization, and strips raw provider authority before returning results."
+  },
+  "nonClaims": [
+    "RAGFlow is not the GBAP human identity or authorization authority.",
+    "RAGFlow Chat/Agent/Workflow/MCP/code execution do not become GBAP product authority merely because upstream provides them.",
+    "The PoU foundation does not authorize company-UAT installation or Production Go-Live.",
+    "Real company knowledge ingestion remains blocked until host-capacity and backup/restore gates pass."
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "contractId": "gbap.crm.v1",
+  "status": "ACTIVE_TEST_CONTRACT",
+  "purpose": "Provider-neutral canonical CRM contract plus Stage 3.5 metadata-driven capability recovery runtime owned by GBAP/GBAP.",
+  "canonicalBusinessTypes": ["Account", "Contact", "Opportunity"],
+  "mandatoryCapabilities": [
+    "crm.v1.account.create",
+    "crm.v1.account.list",
+    "crm.v1.contact.create",
+    "crm.v1.contact.list",
+    "crm.v1.opportunity.create",
+    "crm.v1.opportunity.list",
+    "crm.v1.snapshot.export"
+  ],
+  "createRequestRule": {
+    "businessId": "GBAP durable ID; required and provider-neutral",
+    "relatedBusinessIds": "GBAP durable IDs; resolved by GBAP mapping layer before provider invocation",
+    "opportunityLifecycle": "The bounded canonical create slice supports OPEN Opportunity creation; OPEN requires a mapped Account business ID."
+  },
+  "canonicalRecords": {
+    "Account": {
+      "required": ["externalId", "externalType", "displayName"],
+      "optional": ["website", "linkedinUrl", "addressStreet1", "addressStreet2", "addressCity", "addressState", "addressPostcode", "addressCountry", "annualRevenue", "annualRevenueCurrency", "updatedAt"]
+    },
+    "Contact": {
+      "required": ["externalId", "externalType", "personName"],
+      "optional": ["email", "phone", "jobTitle", "linkedinUrl", "accountExternalId", "updatedAt"]
+    },
+    "Opportunity": {
+      "required": ["externalId", "externalType", "nameSummary", "lifecycleState"],
+      "optional": ["accountExternalId", "estimatedValue", "currencyCode", "pipelineStage", "nextStep"]
+    }
+  },
+  "operationalExtensions": {
+    "recordLifecycle": ["crm.ops.v1.account.update", "crm.ops.v1.account.delete", "crm.ops.v1.contact.update", "crm.ops.v1.contact.delete", "crm.ops.v1.opportunity.update", "crm.ops.v1.opportunity.delete", "crm.ops.v1.task.delete", "crm.ops.v1.note.delete"],
+    "deleteRule": "Canonical compatibility delete remains provider-backed and mapping-aware. Stage 3.5 runtime normal delete uses recoverable soft-delete semantics; permanent destroy is a separate high-privilege operation.",
+    "accountSemanticOverlay": ["primaryEmail", "primaryPhone", "customerType", "relationshipStatus", "industry", "employeeCount", "source", "priority", "notes"]
+  },
+  "metadataRuntimeExtensions": {
+    "purpose": "Recover provider-supported CRM objects, fields, relations, views, record-page layouts and record lifecycle without exposing provider credentials or durable provider IDs to the browser.",
+    "capabilities": [
+      "crm.meta.v1.schema",
+      "crm.meta.v1.views",
+      "crm.meta.v1.layouts",
+      "crm.meta.v1.record.list",
+      "crm.meta.v1.record.get",
+      "crm.meta.v1.record.create",
+      "crm.meta.v1.record.update",
+      "crm.meta.v1.record.delete",
+      "crm.meta.v1.record.restore",
+      "crm.meta.v1.record.destroy"
+    ],
+    "browserIdentityRule": "Browser-facing runtime uses objectKey, fieldKey and GBAP durable businessId. Provider metadata and record IDs are translation-only server state.",
+    "dynamicObjectRule": "Active provider custom objects are recoverable without creating a new handwritten GBAP Surface. Dynamic records receive a GBAP business namespace and durable mapping.",
+    "fieldRule": "Only active policy-permitted fields are rendered; system/read-only fields cannot be written through the generic runtime.",
+    "relationRule": "Relations cross the browser boundary as related businessId + objectKey and are translated to provider record IDs server-side.",
+    "viewRule": "Provider Table/Kanban/Calendar view field visibility, ordering, filters, sorting and grouping are normalized into provider-neutral view metadata.",
+    "layoutRule": "Provider record-page tabs/widgets are normalized; GBAP may substitute governed native widgets for files/mail/calendar while preserving the user-facing record-page capability.",
+    "lifecycleRule": "Normal runtime delete is recoverable soft delete; restore is available to authorized users; permanent destroy is restricted to GBAP super-admin authority."
+  },
+  "normalizedResultRule": "Adapters return provider data only to the GBAP server boundary. GBAP adds durable businessId and strips provider record/metadata IDs before runtime records reach browser business callers.",
+  "canonicalExportRule": "crm.v1.snapshot.export returns contractVersion, sourceProvider, accounts, contacts and opportunities in normalized provider-neutral shapes.",
+  "compatibilityRule": "Historical specialized CRM surfaces and provider-specific PoU capabilities remain available during Stage 3.5 migration. They are compatibility/focused workflows, not a reason to hide metadata-supported provider business capability.",
+  "nonClaims": [
+    "Metadata-driven recovery does not expose Twenty login, credentials, workspace administration or billing to normal users.",
+    "Provider-native AI does not become the GBAP AI authority merely because it exists in the provider.",
+    "Deep workflow/object/layout builders remain permission-gated managed capabilities; GBAP does not duplicate the provider workflow engine.",
+    "Production Go-Live remains separately governed.",
+    "Stage 3.5 does not weaken provider replaceability or the GBAP identity/authorization boundary."
+  ]
+}

@@ -1,0 +1,17 @@
+# syntax=docker/dockerfile:1.7
+FROM node:24.19.0-alpine AS build
+WORKDIR /app
+COPY apps/web/package.json ./package.json
+RUN --mount=type=bind,source=.ci/npm-cache,target=/opt/gbap-ci/npm-cache,readonly \
+    npm install --offline --cache /opt/gbap-ci/npm-cache --no-audit --no-fund --package-lock=false
+COPY apps/web/tsconfig.json apps/web/vite.config.ts apps/web/index.html ./
+COPY apps/web/src ./src
+COPY apps/web/public ./public
+RUN npm run build
+
+FROM node:24.19.0-alpine
+WORKDIR /app
+COPY apps/web/server.mjs ./server.mjs
+COPY --from=build /app/dist ./dist
+EXPOSE 8080
+CMD ["node", "server.mjs"]

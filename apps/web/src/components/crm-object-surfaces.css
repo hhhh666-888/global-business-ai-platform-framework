@@ -1,0 +1,68 @@
+.crm-create-form { display: grid; grid-template-columns: minmax(180px, 1.4fr) minmax(180px, 1fr) auto; gap: 10px; align-items: end; padding: 13px; border-bottom: 1px solid var(--fg-border); background: var(--fg-surface); }
+.crm-create-form label { display: grid; gap: 5px; color: var(--fg-muted); font-size: 9px; }
+.crm-create-form input, .crm-create-form select, .crm-create-form textarea, .crm-record-editor input, .crm-record-editor select, .crm-record-editor textarea { width: 100%; min-height: 32px; padding: 0 9px; border: 1px solid var(--fg-border-strong); border-radius: 7px; outline: none; background: var(--fg-surface); color: var(--fg-text); font: inherit; font-size: 11px; }
+.crm-create-form input, .crm-create-form select, .crm-record-editor input, .crm-record-editor select { height: 32px; }
+.crm-create-form textarea, .crm-record-editor textarea { min-height: 72px; padding: 8px 9px; resize: vertical; line-height: 1.5; }
+.crm-create-form input:focus, .crm-create-form select:focus, .crm-create-form textarea:focus, .crm-record-editor input:focus, .crm-record-editor select:focus, .crm-record-editor textarea:focus { border-color: color-mix(in srgb, var(--fg-accent) 45%, var(--fg-border)); box-shadow: var(--fg-ring); }
+.crm-create-form input:disabled, .crm-create-form select:disabled, .crm-record-editor input:disabled, .crm-record-editor select:disabled, .crm-record-editor textarea:disabled { background: var(--fg-surface-muted); color: var(--fg-subtle); cursor: not-allowed; }
+.crm-form-actions { display: flex; gap: 7px; align-items: center; justify-content: flex-end; }
+.crm-contact-form { grid-template-columns: minmax(180px, 1.2fr) minmax(190px, 1fr) minmax(200px, 1fr) auto; }
+.crm-opportunity-form { grid-template-columns: minmax(190px, 1.5fr) minmax(180px, 1fr) minmax(120px, .7fr) 90px auto; }
+.crm-task-form { grid-template-columns: minmax(190px, 1.4fr) minmax(200px, 1fr) minmax(180px, .8fr) auto; }
+.crm-note-form { grid-template-columns: minmax(220px, 1fr) minmax(220px, 1fr) auto; }
+.crm-wide-field { grid-column: 1 / -2; }
+.form-guidance { grid-column: 1 / -1; margin: 0; padding: 8px 10px; border-radius: 7px; background: var(--fg-surface-soft); color: var(--fg-muted); font-size: 9px; line-height: 1.5; }
+.real-success { margin: 10px 13px; padding: 9px 10px; border: 1px solid color-mix(in srgb, var(--fg-success) 26%, var(--fg-border)); border-radius: 7px; background: var(--fg-success-soft); color: var(--fg-success); font-size: 10px; }
+.crm-record-editor { display: grid; gap: 12px; margin: 12px 13px; padding: 13px; border: 1px solid var(--fg-border); border-radius: 9px; background: var(--fg-surface-soft); }
+.crm-record-editor-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.crm-record-editor-heading > div { display: flex; align-items: baseline; gap: 8px; }
+.crm-record-editor-heading strong { color: var(--fg-text-strong); font-size: 11px; }
+.crm-record-editor-heading span { color: var(--fg-muted); font-size: 9px; }
+.crm-record-editor-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.crm-opportunity-editor-fields { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.crm-record-editor label { display: grid; gap: 5px; color: var(--fg-muted); font-size: 9px; }
+.crm-record-editor .crm-form-actions { padding-top: 2px; }
+.record-subtext { display: block; margin-top: 3px; max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--fg-muted); font-size: 9px; font-weight: 400; }
+.crm-real-kanban { min-height: 320px; }
+.crm-deal-card-button { width: 100%; border: 1px solid var(--fg-border); text-align: left; cursor: pointer; color: inherit; }
+.crm-deal-card-button:hover { border-color: var(--fg-border-strong); background: var(--fg-surface-soft); }
+.crm-real-task-list { padding: 8px 12px 14px; }
+.crm-real-task-list .task-row { width: 100%; }
+.crm-notes-layout { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, .92fr); gap: 14px; }
+.crm-note-list { display: grid; }
+.crm-note-card { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 12px 14px; border-bottom: 1px solid var(--fg-border); }
+.crm-note-icon { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--fg-border); border-radius: 7px; color: var(--fg-accent-strong); background: var(--fg-surface-soft); }
+.crm-note-main { min-width: 0; }
+.crm-note-main > div { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.crm-note-main strong { color: var(--fg-text-strong); font-size: 11px; }
+.crm-note-main time, .crm-note-main small { color: var(--fg-muted); font-size: 9px; }
+.crm-note-main p { margin: 6px 0; color: var(--fg-text); font-size: 10px; line-height: 1.55; white-space: pre-wrap; }
+.crm-real-activity-list { max-height: 560px; overflow: auto; }
+.workbench-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 12px; }
+.workbench-heading h2 { margin: 0; color: var(--fg-text-strong); font-size: 14px; }
+.workbench-heading p { margin: 3px 0 0; color: var(--fg-muted); font-size: 10px; }
+.workbench-opportunity-list { display: grid; padding: 4px 0; }
+.workbench-opportunity-row { width: 100%; display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 10px 13px; border: 0; border-bottom: 1px solid var(--fg-border); background: transparent; color: inherit; text-align: left; cursor: pointer; }
+.workbench-opportunity-row:hover, .workbench-activity-button:hover { background: var(--fg-hover); }
+.workbench-opportunity-row span { min-width: 0; display: flex; align-items: center; gap: 7px; }
+.workbench-opportunity-row strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--fg-text-strong); font-size: 10px; }
+.workbench-opportunity-row b { flex: 0 0 auto; color: var(--fg-text-strong); font-size: 10px; font-weight: 600; }
+.workbench-activity-button { width: 100%; border: 0; border-bottom: 1px solid var(--fg-border); background: transparent; text-align: left; color: inherit; cursor: pointer; }
+@media (max-width: 1100px) {
+  .crm-notes-layout { grid-template-columns: 1fr; }
+  .crm-opportunity-editor-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 980px) {
+  .crm-create-form, .crm-contact-form, .crm-opportunity-form, .crm-task-form, .crm-note-form { grid-template-columns: 1fr 1fr; align-items: stretch; }
+  .crm-form-actions { grid-column: 1 / -1; }
+  .crm-wide-field { grid-column: 1 / -1; }
+  .crm-record-editor-fields { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .crm-create-form, .crm-contact-form, .crm-opportunity-form, .crm-task-form, .crm-note-form { grid-template-columns: 1fr; }
+  .crm-form-actions, .crm-wide-field { grid-column: auto; }
+  .crm-record-editor-fields, .crm-opportunity-editor-fields { grid-template-columns: 1fr; }
+  .crm-note-card { grid-template-columns: 28px minmax(0, 1fr); }
+  .crm-note-card > .text-action { grid-column: 2; justify-self: start; }
+  .workbench-heading { align-items: flex-start; flex-direction: column; }
+}

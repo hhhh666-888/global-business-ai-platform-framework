@@ -1,0 +1,41 @@
+/* Stage 3.7 Batch 15 — floating-layer clipping hardening.
+   Floating menus and fixed drawers must not be trapped by generic panel clipping
+   or by a persisted transform created by the product entrance animation. */
+
+/* User Administration owns an absolute row-action menu plus fixed drawers.
+   Generic .panel uses overflow:hidden, while .content > * keeps a transform after
+   its entrance animation. Both are hostile to floating UI. */
+.content > .identity-admin {
+  animation: none !important;
+  transform: none !important;
+}
+
+.identity-admin.panel,
+.identity-list-card,
+.identity-table-body,
+.identity-user-row,
+.identity-row-actions,
+.identity-more-wrap {
+  overflow: visible !important;
+}
+
+.identity-action-menu {
+  z-index: 120 !important;
+  max-height: min(240px, calc(100vh - 24px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Current audit found global search as the other hand-written absolute business
+   popover. Its topbar ancestry is non-clipping today; keep that invariant explicit
+   so future shell changes cannot silently reproduce the same defect. */
+.topbar,
+.top-actions,
+.global-search-shell,
+.crm-search-wrap {
+  overflow: visible;
+}
+
+.crm-search-popover {
+  z-index: 120;
+}

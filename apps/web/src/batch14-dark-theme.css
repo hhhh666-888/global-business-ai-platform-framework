@@ -1,0 +1,30 @@
+/* Stage 3.7 Batch 14 — dark-theme fallback hardening.
+   Some business surfaces used --fg-elevated although the governed theme never
+   defined that alias. In Dark mode those declarations therefore fell back to
+   literal light values such as #f8f9fb/#f5f7f9. Keep one compatibility alias
+   at the final cascade layer so every existing/new consumer resolves through
+   the active appearance tokens instead of a light fallback. */
+:root {
+  --fg-elevated: var(--fg-surface-soft);
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* Owner-observed neutral customer chips must stay visually subordinate in Dark
+   mode. Do not flatten semantic success/danger/role tones globally. */
+html[data-theme='dark'] .customer-role-tags > span,
+html[data-theme='dark'] .opportunity-grade.grade-unknown {
+  border-color: var(--fg-border) !important;
+  background-color: var(--fg-surface-muted) !important;
+  color: var(--fg-muted) !important;
+}
+
+/* Native controls should never ask the browser to paint a light canvas while the
+   application appearance is dark. Feature CSS still owns each control's tokens. */
+html[data-theme='dark'] input,
+html[data-theme='dark'] select,
+html[data-theme='dark'] textarea {
+  color-scheme: dark;
+}

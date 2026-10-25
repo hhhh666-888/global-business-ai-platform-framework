@@ -1,0 +1,62 @@
+/* One shared visual layer. Existing Navy Dark stays available; Black uses the
+   same dark component scheme with neutral graphite tokens. */
+:root {
+  --fg-motion-duration: 180ms;
+  --fg-motion-ease: cubic-bezier(.2, .75, .25, 1);
+  --fg-radius-md: 14px;
+  --fg-radius-lg: 20px;
+  --fg-subtle: #727e91;
+}
+html[data-theme='dark'] { --fg-subtle: #95a4b9; }
+html[data-appearance='black'] {
+  --fg-bg: #080809;
+  --fg-bg-elevated: #0d0d10;
+  --fg-surface: #17171b;
+  --fg-surface-soft: #1d1d22;
+  --fg-surface-muted: #24242a;
+  --fg-sidebar: rgba(14, 14, 17, .94);
+  --fg-topbar: rgba(17, 17, 21, .88);
+  --fg-border: rgba(235, 235, 245, .12);
+  --fg-border-strong: rgba(235, 235, 245, .22);
+  --fg-text: #e9e9ee;
+  --fg-text-strong: #fafafa;
+  --fg-muted: #adaeb9;
+  --fg-subtle: #9697a5;
+  --fg-hover: rgba(235, 235, 245, .055);
+  --fg-selected: rgba(106, 161, 255, .15);
+  --fg-accent: #80b2ff;
+  --fg-accent-strong: #a3c8ff;
+  --fg-accent-soft: rgba(106, 161, 255, .14);
+  --fg-shadow-soft: 0 2px 8px rgba(0, 0, 0, .14);
+  --fg-shadow-card: 0 8px 28px rgba(0, 0, 0, .2);
+  --fg-shadow-raised: 0 20px 70px rgba(0, 0, 0, .45);
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; -webkit-font-smoothing: antialiased; }
+.app-shell { background: var(--fg-bg); }
+.topbar { backdrop-filter: blur(20px) saturate(130%); -webkit-backdrop-filter: blur(20px) saturate(130%); }
+.sidebar { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.sidebar-item { border-radius: 10px; }
+.panel, .knowledge-card, .knowledge-main, .knowledge-hero, .settings-layout { border-radius: var(--fg-radius-lg); }
+.appearance-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.appearance-card { border-radius: 18px; }
+.appearance-preview.black { background: #0d0d10; border-color: #37373e; }
+.appearance-preview.black .appearance-preview-sidebar { background: #121215; border-color: #37373e; }
+.appearance-preview.black .appearance-preview-main i { background: #28282e; box-shadow: none; }
+.global-search-wrap { border-radius: 12px; }
+button, a, input, textarea, select { transition: background-color var(--fg-motion-duration) var(--fg-motion-ease), border-color var(--fg-motion-duration) var(--fg-motion-ease), box-shadow var(--fg-motion-duration) var(--fg-motion-ease); }
+button:not(:disabled) { touch-action: manipulation; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--fg-accent); outline-offset: 3px; }
+.sidebar-item:active, .appearance-card:active { transform: scale(.985); }
+.appearance-card, .sidebar-item { transition: transform var(--fg-motion-duration) var(--fg-motion-ease), background-color var(--fg-motion-duration) var(--fg-motion-ease), border-color var(--fg-motion-duration) var(--fg-motion-ease); }
+.settings-section, .knowledge-inspector { animation: fg-enter 220ms var(--fg-motion-ease); }
+@keyframes fg-enter { from { opacity: .65; } to { opacity: 1; } }
+@media (max-width: 760px) {
+  .appearance-grid { grid-template-columns: 1fr; }
+  .knowledge-ghost, .knowledge-primary, .settings-nav-item { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .topbar, .sidebar { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--fg-surface); }
+}

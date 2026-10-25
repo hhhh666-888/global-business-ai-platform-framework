@@ -1,0 +1,57 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Node
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+coverage/
+dist/
+build/
+.next/
+.turbo/
+
+# CI materialized dependency supply (ephemeral checkout only)
+.ci/
+
+# Runtime data
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+runtime/
+data/
+logs/
+*.log
+
+# Containers / local overrides
+compose.override.yml
+docker-compose.override.yml
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Test / temp
+.tmp/
+tmp/
+temp/
+playwright-report/
+test-results/
+
+# Python if later used
+__pycache__/
+*.py[cod]
+.venv/
+venv/

@@ -1,0 +1,295 @@
+.company-profile-75 {
+  display: grid;
+  gap: 16px;
+}
+
+.company-profile-research-note {
+  border: 1px solid var(--color-gray-20, #e5e7eb);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--color-gray-60, #667085);
+  background: var(--color-gray-5, #fafafa);
+}
+
+.company-profile-module,
+.top500-v46-module {
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  border: 1px solid var(--color-gray-20, #e5e7eb);
+  border-radius: 12px;
+  background: var(--color-gray-0, #fff);
+  overflow: visible;
+}
+
+.company-profile-module-head {
+  min-height: 42px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--color-gray-15, #eceff3);
+  background: var(--color-gray-5, #fafafa);
+}
+
+.company-profile-module-head h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-gray-90, #1d2939);
+}
+
+.company-profile-module-head span {
+  font-size: 11px;
+  color: var(--color-gray-55, #667085);
+}
+
+.company-profile-field-grid,
+.top500-v46-field-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 1px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+}
+
+.company-profile-field,
+.top500-v46-field {
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  align-self: start;
+  padding: 11px 14px;
+  display: flex !important;
+  flex-direction: column;
+  gap: 6px;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+  border-bottom: 1px solid var(--color-gray-15, #eceff3);
+}
+
+.company-profile-field:nth-child(odd),
+.top500-v46-field:nth-child(odd) {
+  border-right: 1px solid var(--color-gray-15, #eceff3);
+}
+
+.company-profile-field span,
+.top500-v46-field span {
+  display: block !important;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--color-gray-55, #667085);
+}
+
+.company-profile-field strong,
+.top500-v46-field strong {
+  display: block !important;
+  font-size: 13px;
+  line-height: 1.55;
+  font-weight: 600;
+  color: var(--color-gray-90, #1d2939);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.company-profile-field a {
+  color: var(--color-blue-60, #2563eb);
+  text-decoration: none;
+}
+
+.company-profile-field a:hover {
+  text-decoration: underline;
+}
+
+.top500-v46-editor-form {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.top500-v46-editor {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px 20px 26px;
+}
+
+.top500-v46-editor-note {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-gray-20, #e5e7eb);
+  border-radius: 10px;
+  background: var(--color-gray-5, #fafafa);
+  color: var(--color-gray-60, #667085);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.top500-v46-editor .top500-v46-field {
+  min-height: 0 !important;
+}
+
+.top500-v46-editor .top500-v46-field > label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--color-gray-55, #667085);
+  font-size: 11px;
+}
+
+.top500-v46-editor input,
+.top500-v46-editor textarea,
+.top500-v46-editor select,
+.top500-v46-system-classification select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--fg-border, #dfe3e8);
+  border-radius: 8px;
+  background: var(--fg-surface, #fff);
+  color: var(--fg-text, #172033);
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.top500-v46-editor input,
+.top500-v46-editor select,
+.top500-v46-system-classification select {
+  min-height: 34px;
+  padding: 0 9px;
+}
+
+.top500-v46-editor textarea {
+  min-height: 76px;
+  padding: 8px 9px;
+  resize: vertical;
+}
+
+.top500-v46-editor input:focus,
+.top500-v46-editor textarea:focus,
+.top500-v46-editor select:focus,
+.top500-v46-system-classification select:focus {
+  border-color: #5d8ff0;
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, .11);
+}
+
+.top500-v46-system-classification {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: minmax(220px, 360px) 1fr;
+  align-items: end;
+  gap: 14px;
+  border: 1px solid var(--color-gray-20, #e5e7eb);
+  border-radius: 10px;
+  background: var(--color-gray-5, #fafafa);
+}
+
+.top500-v46-system-classification label {
+  display: grid;
+  gap: 6px;
+}
+
+.top500-v46-system-classification label > span,
+.top500-v46-system-classification small {
+  color: var(--color-gray-60, #667085);
+  font-size: 11px;
+}
+
+.top500-v46-editor-footer {
+  flex: 0 0 auto;
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 20px;
+  border-top: 1px solid var(--fg-border, #e7e9ee);
+  background: rgba(255,255,255,.98);
+}
+
+.top500-v46-editor-footer > span {
+  color: var(--fg-muted, #697386);
+  font-size: 10px;
+}
+
+.top500-v46-editor-footer > div {
+  display: flex;
+  gap: 8px;
+}
+
+.top500-filter-bar {
+  grid-template-columns: minmax(260px, 1.7fr) repeat(4, minmax(150px, 1fr));
+}
+
+.top500-column-panel {
+  max-height: min(62vh, 660px);
+  overflow: auto;
+}
+
+.top500-column-module {
+  padding: 10px 0 2px;
+  border-top: 1px solid var(--color-gray-15, #eceff3);
+}
+
+.top500-column-module:first-of-type {
+  border-top: 0;
+}
+
+.top500-column-module-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 8px;
+  color: var(--color-gray-70, #475467);
+  font-size: 11px;
+}
+
+.top500-company-table td {
+  vertical-align: top;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1200px) {
+  .top500-filter-bar {
+    grid-template-columns: repeat(3, minmax(170px, 1fr));
+  }
+
+  .top500-filter-bar .customer-search-field {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 900px) {
+  .company-profile-field-grid,
+  .top500-v46-field-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .company-profile-field:nth-child(odd),
+  .top500-v46-field:nth-child(odd) {
+    border-right: 0;
+  }
+
+  .top500-v46-system-classification,
+  .top500-filter-bar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .top500-filter-bar .customer-search-field {
+    grid-column: auto;
+  }
+}

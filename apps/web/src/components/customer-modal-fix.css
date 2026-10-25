@@ -1,0 +1,137 @@
+/* Stage 3.7 Batch 13 — customer detail/create/edit is a viewport modal.
+   The modal frame stays fixed; only its internal body/editor scrolls. */
+
+/* The customer surface itself must not retain the product entrance transform while
+   a modal is open. This keeps fixed descendants on normal viewport geometry. */
+.content > .customer-database-surface {
+  animation: none !important;
+  transform: none !important;
+}
+
+/* IMPORTANT: the React DOM class is company-drawer-backdrop. Batch 12/early Batch 13
+   accidentally targeted customer-drawer-backdrop, so none of the fixed/center rules
+   reached the real element. */
+.company-drawer-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1000 !important;
+  width: 100vw;
+  height: 100dvh;
+  box-sizing: border-box;
+  display: grid !important;
+  place-items: center !important;
+  padding: clamp(18px, 4vh, 40px) clamp(18px, 4vw, 56px);
+  overflow: hidden;
+  background: rgba(7, 15, 30, .42);
+  backdrop-filter: blur(3px);
+}
+
+.company-detail-drawer {
+  position: relative;
+  width: min(1180px, calc(100vw - 112px));
+  min-width: min(720px, calc(100vw - 36px));
+  height: min(860px, calc(100dvh - 80px));
+  max-height: calc(100dvh - 80px);
+  border: 1px solid var(--fg-border-strong, #cbd2da);
+  border-radius: 14px;
+  box-shadow: 0 26px 80px rgba(15, 23, 42, .28);
+  overflow: hidden;
+  animation: customer-modal-in .16s ease-out;
+}
+
+/* Keep the modal frame geometrically fixed from the first rendered frame. Only
+   opacity changes during entrance, so internal scrolling cannot race a scale
+   animation and alter the dialog bounding box. */
+@keyframes customer-modal-in {
+  from { opacity: .82; }
+  to { opacity: 1; }
+}
+
+.company-drawer-header,
+.company-drawer-tabs,
+.company-editor-header {
+  flex: 0 0 auto;
+}
+
+.company-drawer-body {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.company-profile-editor {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding-bottom: 82px;
+}
+
+/* Keep actions visible while the editor body scrolls. Because the footer remains a
+   DOM descendant of the dialog, keyboard/accessibility ownership stays with the modal. */
+.company-editor-footer {
+  position: fixed;
+  left: 50%;
+  right: auto;
+  bottom: max(40px, calc((100dvh - 860px) / 2));
+  width: min(1180px, calc(100vw - 112px));
+  min-width: min(720px, calc(100vw - 36px));
+  box-sizing: border-box;
+  transform: translateX(-50%);
+  z-index: 1002;
+  border-radius: 0 0 14px 14px;
+}
+
+/* twenty-ui ButtonText keeps a literal "..." node in the DOM even when its loading
+   ellipsis has no active meaning. Both the legacy footer and the TOP500 v46 75-field
+   footer already change the visible title while saving, so the dormant node must stay
+   hidden and must not pollute the accessible button name. */
+.company-editor-footer button > div > div:last-child,
+.top500-v46-editor-footer button > div > div:last-child {
+  display: none !important;
+}
+
+html[data-theme='dark'] .company-drawer-backdrop {
+  background: rgba(2, 8, 20, .64);
+}
+
+@media (max-width: 1000px) {
+  .company-drawer-backdrop {
+    padding: 18px;
+  }
+  .company-detail-drawer {
+    width: min(940px, calc(100vw - 36px));
+    min-width: 0;
+    height: calc(100dvh - 36px);
+    max-height: calc(100dvh - 36px);
+  }
+  .company-editor-footer {
+    width: min(940px, calc(100vw - 36px));
+    min-width: 0;
+    bottom: 18px;
+  }
+}
+
+@media (max-width: 680px) {
+  .company-drawer-backdrop {
+    padding: 0;
+  }
+  .company-detail-drawer {
+    width: 100vw;
+    min-width: 0;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+  .company-editor-footer {
+    width: 100vw;
+    min-width: 0;
+    bottom: 0;
+    border-radius: 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

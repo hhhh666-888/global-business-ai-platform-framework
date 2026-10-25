@@ -1,0 +1,11 @@
+FROM node:24.19.0-alpine
+WORKDIR /app
+COPY .ci/twenty-adapter/node_modules ./node_modules
+COPY providers/twenty-adapter/server.mjs ./server.mjs
+COPY providers/twenty-adapter/extended.mjs ./extended.mjs
+COPY providers/twenty-adapter/rate-limit-transport.mjs ./rate-limit-transport.mjs
+COPY providers/twenty-adapter/bootstrap.mjs ./bootstrap.mjs
+COPY providers/twenty-adapter/stage35-advanced.mjs ./stage35-advanced.mjs
+COPY providers/twenty-adapter/stage35-entry.mjs ./stage35-entry.mjs
+EXPOSE 8091
+CMD ["node", "stage35-entry.mjs"]

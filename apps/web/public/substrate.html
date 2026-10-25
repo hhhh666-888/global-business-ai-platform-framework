@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GBAP Minimum Substrate</title>
+  <style>
+    :root { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #15171a; background: #f4f6f8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    header { display:flex; justify-content:space-between; align-items:center; padding:18px 24px; background:#fff; border-bottom:1px solid #dde2e8; position:sticky; top:0; }
+    h1 { margin:0; font-size:20px; }
+    main { max-width:1200px; margin:0 auto; padding:24px; display:grid; gap:16px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+    .card { background:#fff; border:1px solid #dde2e8; border-radius:12px; padding:16px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+    h2 { margin:0 0 12px; font-size:16px; }
+    button { border:1px solid #b7c0cb; background:#fff; border-radius:8px; padding:9px 12px; cursor:pointer; margin:4px 6px 4px 0; }
+    button.primary { background:#17191c; color:#fff; border-color:#17191c; }
+    button.danger { border-color:#b42318; color:#b42318; }
+    pre { margin:0; white-space:pre-wrap; word-break:break-word; background:#0f1720; color:#d8e2ec; border-radius:8px; padding:12px; min-height:100px; max-height:420px; overflow:auto; }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th,td { text-align:left; padding:8px; border-bottom:1px solid #e8ecf0; vertical-align:top; }
+    .badge { display:inline-block; padding:2px 7px; border-radius:999px; background:#eef1f4; font-size:12px; }
+    .ok { background:#e9f7ef; }
+    .bad { background:#fdecec; }
+    .muted { color:#667085; font-size:13px; }
+    [hidden] { display:none !important; }
+  </style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>GBAP Minimum Runnable Substrate</h1>
+    <div class="muted">Stage 3 substrate — provider-neutral foundation, not a business brick</div>
+  </div>
+  <div>
+    <span id="identity" class="muted">未登录</span>
+    <button id="login" class="primary">登录</button>
+    <button id="logout" hidden>退出</button>
+  </div>
+</header>
+<main>
+  <section id="accessNotice" class="card">
+    <h2>平台管理权限</h2>
+    <div id="accessMessage" class="muted">登录后验证平台管理权限。</div>
+  </section>
+  <div id="adminControls" hidden>
+    <div class="grid">
+      <section class="card">
+        <h2>Substrate</h2>
+        <button id="refresh">刷新状态</button>
+        <button id="register">注册 Reference Provider</button>
+        <button id="invoke" class="primary">调用 demo.echo</button>
+        <button id="disable">禁用 Provider</button>
+        <button id="enable">启用 Provider</button>
+        <button id="remove" class="danger">卸载 Provider</button>
+      </section>
+      <section class="card">
+        <h2>验证目标</h2>
+        <div class="muted">登录 → Provider 注册 → Capability 解析 → 授权 → 调用 → Health → 禁用/卸载 → GBAP 仍存活。</div>
+      </section>
+    </div>
+    <section class="card">
+      <h2>Providers</h2>
+      <div id="providers" class="muted">管理员登录后加载。</div>
+    </section>
+    <div class="grid">
+      <section class="card">
+        <h2>API Output</h2>
+        <pre id="output">Ready.</pre>
+      </section>
+      <section class="card">
+        <h2>Audit</h2>
+        <button id="audit">读取最近审计</button>
+        <pre id="auditOutput">管理员登录后可读取。</pre>
+      </section>
+    </div>
+  </div>
+</main>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

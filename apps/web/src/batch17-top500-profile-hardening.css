@@ -1,0 +1,88 @@
+/* Stage 3.7 Batch 17 — TOP500 profile theme hardening.
+   company-basic-profile-75.css predates the governed GBAP appearance tokens
+   and still references optional --color-gray-* variables with literal light
+   fallbacks. This late cascade keeps the complete 75-field detail/editor on the
+   active theme in both light and dark appearance without changing layout. */
+
+.company-profile-research-note,
+.company-profile-module,
+.top500-v46-module,
+.top500-v46-editor-note,
+.top500-v46-system-classification {
+  border-color: var(--fg-border) !important;
+  background: var(--fg-surface) !important;
+  color: var(--fg-text) !important;
+}
+
+.company-profile-research-note,
+.top500-v46-editor-note,
+.top500-v46-system-classification {
+  background: var(--fg-surface-soft) !important;
+  color: var(--fg-muted) !important;
+}
+
+.company-profile-module-head {
+  border-bottom-color: var(--fg-border) !important;
+  background: var(--fg-surface-soft) !important;
+}
+
+.company-profile-module-head h4,
+.company-profile-field strong,
+.top500-v46-field strong {
+  color: var(--fg-text-strong) !important;
+}
+
+.company-profile-module-head span,
+.company-profile-field span,
+.top500-v46-field span,
+.top500-v46-editor .top500-v46-field > label,
+.top500-v46-system-classification label > span,
+.top500-v46-system-classification small {
+  color: var(--fg-muted) !important;
+}
+
+.company-profile-field,
+.top500-v46-field {
+  border-bottom-color: var(--fg-border) !important;
+}
+
+.company-profile-field:nth-child(odd),
+.top500-v46-field:nth-child(odd) {
+  border-right-color: var(--fg-border) !important;
+}
+
+.top500-v46-editor input,
+.top500-v46-editor textarea,
+.top500-v46-editor select,
+.top500-v46-system-classification select {
+  border-color: var(--fg-border) !important;
+  background: var(--fg-surface) !important;
+  color: var(--fg-text) !important;
+}
+
+.top500-v46-editor-footer {
+  border-top-color: var(--fg-border) !important;
+  background: var(--fg-surface) !important;
+}
+
+.top500-v46-editor-footer > span {
+  color: var(--fg-muted) !important;
+}
+
+.top500-column-module {
+  border-top-color: var(--fg-border) !important;
+}
+
+.top500-column-module-title {
+  color: var(--fg-muted) !important;
+}
+
+/* 销售状态与当前项目阶段共用同一阶段事实源；查看页只展示当前项目阶段。 */
+.company-profile-75 [data-top500-field='销售状态'] {
+  display: none !important;
+}
+
+/* 避免隐藏一个重复字段后模块计数与可见卡片数产生视觉矛盾。 */
+.company-profile-75 .company-profile-module:has([data-top500-field='销售状态']) .company-profile-module-head > span {
+  display: none !important;
+}

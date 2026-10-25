@@ -1,0 +1,25 @@
+.crm-file-preview { padding: 0; border: 1px solid var(--fg-border); border-radius: 16px; width: min(1120px, calc(100vw - 32px)); height: min(850px, calc(100dvh - 48px)); max-width: none; max-height: none; color: var(--fg-text); background: var(--fg-surface); box-shadow: 0 24px 80px #0004; }
+.crm-file-preview[open] { display: flex; flex-direction: column; }
+.crm-file-preview::backdrop { background: #16203388; backdrop-filter: blur(3px); }
+.crm-file-preview-header { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--fg-border); }
+.crm-file-preview-header > div:first-child { min-width: 0; }
+.crm-file-preview-header h3 { margin: 0; font-size: 16px; overflow-wrap: anywhere; }
+.crm-file-preview-header p { margin: 6px 0 0; color: var(--fg-muted); font-size: 12px; }
+.crm-file-preview-actions { display: flex; gap: 12px; flex-shrink: 0; align-items: center; }
+.crm-file-preview-actions > button:last-child, .crm-file-preview-message button { padding: 7px 12px; border: 1px solid var(--fg-border); border-radius: 8px; color: var(--fg-text); background: var(--fg-surface); cursor: pointer; }
+.crm-file-preview-body { flex: 1; overflow: auto; min-height: 0; padding: 12px; }
+.crm-file-preview-text { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; padding: 16px; font-size: 14px; line-height: 1.7; }
+.crm-file-preview-image { display: block; max-width: 100%; max-height: 100%; object-fit: contain; margin: 0 auto; }
+.crm-file-preview-message { padding: 32px 16px; text-align: center; line-height: 1.7; }
+.crm-file-preview-notice { margin: 0; padding: 10px 16px; background: var(--fg-surface-soft); color: var(--fg-muted); font-size: 13px; }
+.crm-file-preview .knowledge-preview-state { font-size: 14px; }
+.crm-file-preview .knowledge-preview-toolbar { font-size: 13px; }
+.crm-file-preview .knowledge-preview-toolbar strong { font-size: 13px; }
+.crm-file-preview .knowledge-markdown-preview { font-size: 14px; max-height: none; }
+.crm-file-preview .knowledge-pdf-highlighter { height: 100%; min-height: 360px; }
+@media (max-width: 600px) {
+  .crm-file-preview { width: calc(100vw - 12px); height: calc(100dvh - 24px); border-radius: 12px; }
+  .crm-file-preview-header { padding: 12px; gap: 10px; flex-wrap: wrap; }
+  .crm-file-preview-header h3 { font-size: 14px; }
+  .crm-file-preview-body { padding: 6px; }
+}

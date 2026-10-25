@@ -1,0 +1,79 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #18212f;
+  background: #f5f7fa;
+  font-synthesis: none;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; background: #f5f7fa; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+.app-shell { min-height: 100vh; }
+.app-header { height: 76px; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; background: #fff; border-bottom: 1px solid #e3e8ef; position: sticky; top: 0; z-index: 10; }
+.brand-row { display: flex; align-items: center; gap: 12px; }
+.brand-mark { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: #131a24; color: #fff; font-weight: 700; letter-spacing: .04em; }
+.app-header h1 { margin: 0; font-size: 17px; letter-spacing: .02em; }
+.app-header p { margin: 3px 0 0; font-size: 12px; color: #718096; }
+.boundary-badge { padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 999px; background: #f8fafc; font-size: 12px; color: #475569; }
+main { max-width: 1240px; margin: 0 auto; padding: 28px; }
+.hero-panel { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(260px, .6fr); gap: 22px; align-items: end; padding: 28px; border-radius: 18px; background: linear-gradient(135deg, #111827, #263348); color: #fff; box-shadow: 0 14px 40px rgba(15,23,42,.16); }
+.hero-panel h2 { max-width: 760px; margin: 8px 0; font-size: 28px; line-height: 1.25; }
+.hero-panel p:not(.eyebrow) { margin: 0; max-width: 760px; color: #ced7e4; line-height: 1.7; }
+.eyebrow { margin: 0; text-transform: uppercase; letter-spacing: .12em; font-size: 11px; font-weight: 700; color: #708096; }
+.hero-panel .eyebrow { color: #aab8ca; }
+.provenance { justify-self: stretch; border: 1px solid rgba(255,255,255,.18); border-radius: 12px; padding: 14px; background: rgba(255,255,255,.06); }
+.provenance span, .provenance code { display: block; }
+.provenance span { font-size: 12px; color: #b7c2d1; margin-bottom: 6px; }
+.provenance code { font-size: 13px; color: #fff; }
+.view-tabs { display: inline-flex; margin: 22px 0 14px; padding: 4px; border-radius: 10px; background: #e9edf2; }
+.view-tabs button { border: 0; background: transparent; padding: 8px 14px; border-radius: 8px; color: #596579; }
+.view-tabs button.active { background: #fff; color: #172033; box-shadow: 0 1px 4px rgba(15,23,42,.1); }
+.surface { background: #fff; border: 1px solid #e1e7ee; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(15,23,42,.04); }
+.surface-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+.surface-toolbar h2 { margin: 3px 0 0; font-size: 20px; }
+.surface-toolbar > span { color: #718096; font-size: 13px; }
+.surface-toolbar input { min-width: 250px; border: 1px solid #d7dee7; border-radius: 9px; padding: 9px 11px; outline: none; }
+.surface-toolbar input:focus { border-color: #8492a6; box-shadow: 0 0 0 3px rgba(132,146,166,.12); }
+.account-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+.atomic-card { background: #fff; border: 1px solid #e2e7ed; border-radius: 12px; transition: box-shadow .18s ease, transform .18s ease; }
+.atomic-card:hover { box-shadow: 0 6px 18px rgba(15,23,42,.08); }
+.atomic-card-header { padding: 16px; }
+.atomic-card-title { font-weight: 650; }
+.atomic-card-description { color: #718096; font-size: 13px; }
+.atomic-card-content { padding: 15px; }
+.account-card .atomic-card-content { display: flex; align-items: center; gap: 12px; }
+.account-card strong { display: block; font-size: 14px; }
+.account-card p { margin: 3px 0; color: #667085; font-size: 12px; }
+.account-card span { color: #8a96a8; font-size: 11px; }
+.avatar, .mini-avatar { display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; background: #eef2f6; color: #39465a; font-weight: 700; }
+.avatar { width: 38px; height: 38px; }
+.mini-avatar { width: 24px; height: 24px; font-size: 11px; }
+.pipeline { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
+.pipeline-column { min-height: 260px; padding: 12px; border: 1px solid #e4e9ef; border-radius: 12px; background: #f8fafc; }
+.column-title { display: flex; justify-content: space-between; margin-bottom: 10px; color: #4c596d; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+.column-title span { min-width: 22px; height: 22px; display: grid; place-items: center; border-radius: 999px; background: #e6ebf1; }
+.opportunity-button { width: 100%; display: block; padding: 0; border: 0; background: transparent; text-align: left; margin-bottom: 10px; }
+.opportunity-button:focus-visible { outline: 3px solid rgba(66,91,121,.22); border-radius: 12px; }
+.opportunity-card .atomic-card-content { padding: 13px; }
+.opportunity-heading { display: flex; align-items: start; gap: 10px; }
+.opportunity-heading p { flex: 1; margin: 0 0 9px; color: #263244; font-size: 13px; line-height: 1.45; }
+.opportunity-meta { margin: 0; color: #78869a; font-size: 11px; }
+.detail-panel { position: fixed; top: 92px; right: 24px; width: min(360px, calc(100vw - 48px)); padding: 22px; background: #fff; border: 1px solid #dce3eb; border-radius: 14px; box-shadow: 0 18px 50px rgba(15,23,42,.2); z-index: 20; }
+.detail-panel h2 { margin: 5px 0 3px; }
+.detail-panel > p:not(.eyebrow) { margin: 0 0 18px; color: #667085; }
+.detail-panel dl { margin: 0; }
+.detail-panel dl div { display: flex; justify-content: space-between; gap: 20px; padding: 10px 0; border-top: 1px solid #edf0f4; }
+.detail-panel dt { color: #78869a; }
+.detail-panel dd { margin: 0; font-weight: 600; text-align: right; }
+.close-button { position: absolute; right: 12px; top: 10px; border: 0; background: transparent; font-size: 24px; color: #718096; }
+@media (max-width: 800px) {
+  .app-header { padding: 0 18px; }
+  .boundary-badge { display: none; }
+  main { padding: 18px; }
+  .hero-panel { grid-template-columns: 1fr; padding: 22px; }
+  .hero-panel h2 { font-size: 23px; }
+  .provenance { justify-self: auto; }
+  .surface-toolbar { align-items: stretch; flex-direction: column; }
+  .surface-toolbar input { min-width: 0; width: 100%; }
+  .account-grid, .pipeline { grid-template-columns: 1fr; }
+}

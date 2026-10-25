@@ -1,0 +1,102 @@
+.company-import-hero-actions,
+.company-import-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.company-import-hero-actions > span {
+  color: var(--fg-text-muted, #8fa2ba);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.company-import-history-detail {
+  display: grid;
+  gap: 14px;
+}
+
+.company-import-detail-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding: 12px 14px;
+  border: 1px solid var(--fg-border-subtle, rgba(148, 163, 184, 0.14));
+  border-radius: 10px;
+  background: var(--fg-surface-raised, #132137);
+  color: var(--fg-text-secondary, #aebed0);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.company-import-history-detail td:last-child {
+  max-width: 360px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* The import center owns a complete light/dark token set instead of relying on
+   dark fallbacks when the shell theme does not expose the legacy --fg tokens. */
+html[data-theme='light'] .company-import-center {
+  --fg-text-primary: #172033;
+  --fg-text-secondary: #536176;
+  --fg-text-muted: #718096;
+  --fg-border-subtle: #dce3ec;
+  --fg-surface: #ffffff;
+  --fg-surface-raised: #f6f8fb;
+  --fg-input-background: #ffffff;
+}
+
+html[data-theme='dark'] .company-import-center {
+  --fg-text-primary: #eef4fb;
+  --fg-text-secondary: #aebed0;
+  --fg-text-muted: #8fa2ba;
+  --fg-border-subtle: rgba(148, 163, 184, 0.18);
+  --fg-surface: #101b2c;
+  --fg-surface-raised: #132137;
+  --fg-input-background: #0d1828;
+}
+
+html[data-theme='light'] .company-import-alert-info {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #1e4f91;
+}
+
+html[data-theme='light'] .company-import-alert-error {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+html[data-theme='light'] .company-import-metric-success,
+html[data-theme='light'] .company-import-status-completed,
+html[data-theme='light'] .company-import-status-preflight_ready,
+html[data-theme='light'] .action-create {
+  color: #047857;
+}
+
+html[data-theme='light'] .company-import-metric-primary,
+html[data-theme='light'] .company-import-status-running,
+html[data-theme='light'] .action-update,
+html[data-theme='light'] .company-import-filterbar button.is-active {
+  color: #1d4ed8;
+}
+
+html[data-theme='light'] .company-import-status-partial_failed,
+html[data-theme='light'] .company-import-status-preflight_blocked {
+  color: #b91c1c;
+}
+
+html[data-theme='light'] .action-conflict,
+html[data-theme='light'] .company-import-mapping-row .is-protected {
+  color: #92400e;
+}
+
+@media (max-width: 760px) {
+  .company-import-hero-actions,
+  .company-import-detail-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

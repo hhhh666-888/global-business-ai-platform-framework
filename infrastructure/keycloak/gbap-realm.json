@@ -1,0 +1,91 @@
+{
+  "realm": "gbap",
+  "enabled": true,
+  "sslRequired": "NONE",
+  "displayName": "GBAP Substrate Lab",
+  "registrationAllowed": false,
+  "resetPasswordAllowed": true,
+  "rememberMe": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "substrate-user",
+        "description": "May use registered substrate capabilities"
+      },
+      {
+        "name": "substrate-manager",
+        "description": "May use manager-level CRM analysis and governed bulk operations without substrate administration authority"
+      },
+      {
+        "name": "substrate-admin",
+        "description": "May register, disable, replace and remove providers"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "gbap-web",
+      "name": "GBAP Minimum Substrate Web",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://localhost:8080/*",
+        "http://192.0.2.10:3030/*",
+        "https://portal.example.com/*"
+      ],
+      "webOrigins": [
+        "http://localhost:8080",
+        "http://192.0.2.10:3030",
+        "https://portal.example.com"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:8080/*##http://192.0.2.10:3030/*##https://portal.example.com/*"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "substrate-admin",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Substrate",
+      "lastName": "Admin",
+      "email": "substrate-admin@example.invalid",
+      "credentials": [],
+      "realmRoles": [
+        "substrate-user",
+        "substrate-admin"
+      ]
+    },
+    {
+      "username": "substrate-manager",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Substrate",
+      "lastName": "Manager",
+      "email": "substrate-manager@example.invalid",
+      "credentials": [],
+      "realmRoles": [
+        "substrate-user",
+        "substrate-manager"
+      ]
+    },
+    {
+      "username": "substrate-user",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Substrate",
+      "lastName": "User",
+      "email": "substrate-user@example.invalid",
+      "credentials": [],
+      "realmRoles": [
+        "substrate-user"
+      ]
+    }
+  ]
+}

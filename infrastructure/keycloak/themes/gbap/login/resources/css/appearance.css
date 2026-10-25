@@ -1,0 +1,56 @@
+/* Batch 16 — explicit GBAP appearance for the same-origin Keycloak login surface.
+   No preference means Light. Dark/System are applied only after the user chose them. */
+html[data-gbap-theme='dark'] .pf-v5-c-login__main {
+  border-color: rgba(104, 142, 181, .28) !important;
+  background: rgba(10, 22, 37, .97) !important;
+  color: #e8eef7 !important;
+  box-shadow: 0 36px 90px rgba(0, 0, 0, .46), 0 12px 28px rgba(0, 0, 0, .24), 0 1px 0 rgba(255,255,255,.04) inset !important;
+}
+html[data-gbap-theme='dark'] #kc-page-title,
+html[data-gbap-theme='dark'] .pf-v5-c-form__label-text,
+html[data-gbap-theme='dark'] .pf-v5-c-check__label,
+html[data-gbap-theme='dark'] .pf-v5-c-form__helper-text,
+html[data-gbap-theme='dark'] .pf-v5-c-form__helper-text-container,
+html[data-gbap-theme='dark'] .pf-v5-c-alert,
+html[data-gbap-theme='dark'] .pf-v5-c-alert__title,
+html[data-gbap-theme='dark'] .pf-v5-c-alert__description,
+html[data-gbap-theme='dark'] #kc-info,
+html[data-gbap-theme='dark'] #kc-info-wrapper {
+  color: #d7e0ec !important;
+}
+html[data-gbap-theme='dark'] .pf-v5-c-form-control,
+html[data-gbap-theme='dark'] .pf-v5-c-form-control input,
+html[data-gbap-theme='dark'] input[type='text'],
+html[data-gbap-theme='dark'] input[type='password'],
+html[data-gbap-theme='dark'] input[type='email'] {
+  border-color: #33475f !important;
+  background: #101d2c !important;
+  color: #eef4fb !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .22) !important;
+}
+html[data-gbap-theme='dark'] .pf-v5-c-form-control::placeholder,
+html[data-gbap-theme='dark'] .pf-v5-c-form-control input::placeholder,
+html[data-gbap-theme='dark'] input::placeholder {
+  color: #8292a6 !important;
+}
+html[data-gbap-theme='dark'] .pf-v5-c-form-control:hover,
+html[data-gbap-theme='dark'] input:hover {
+  border-color: #49617d !important;
+}
+html[data-gbap-theme='dark'] .pf-v5-c-alert,
+html[data-gbap-theme='dark'] #kc-info-wrapper,
+html[data-gbap-theme='dark'] .pf-v5-c-login__main-footer-band {
+  border-color: #33475f !important;
+  background: #132235 !important;
+}
+html[data-gbap-theme='dark'] .pf-v5-c-button.pf-m-link,
+html[data-gbap-theme='dark'] a {
+  color: #83b9e5 !important;
+}
+html[data-gbap-theme='dark'] .pf-v5-c-button.pf-m-link:hover,
+html[data-gbap-theme='dark'] a:hover {
+  color: #acd2f0 !important;
+}
+html[data-gbap-theme='dark'] .pf-v5-c-check__input {
+  accent-color: #4b91c5;
+}

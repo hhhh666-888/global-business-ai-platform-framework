@@ -1,0 +1,117 @@
+.business-record-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 160;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  box-sizing: border-box;
+  border: 0;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: transparent;
+}
+.business-record-modal-backdrop:not([open]) { display: none; }
+.business-record-modal-backdrop::backdrop {
+  background: rgba(7, 15, 30, .42);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+.business-record-modal {
+  width: min(860px, calc(100vw - 56px));
+  max-height: calc(100vh - 56px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--fg-border-strong);
+  border-radius: 14px;
+  background: var(--fg-surface);
+  color: var(--fg-text);
+  box-shadow: 0 24px 70px rgba(7, 15, 30, .28);
+}
+.business-record-modal-large { width: min(1080px, calc(100vw - 56px)); }
+.business-record-modal-medium { width: min(720px, calc(100vw - 56px)); }
+.business-record-modal-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--fg-border);
+  background: var(--fg-surface);
+}
+.business-record-modal-header h3 { margin: 0; color: var(--fg-text-strong); font-size: 17px; font-weight: 680; }
+.business-record-modal-header p { margin: 5px 0 0; color: var(--fg-muted); font-size: 10px; line-height: 1.55; }
+.business-record-modal-close {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--fg-border);
+  border-radius: 8px;
+  background: var(--fg-surface);
+  color: var(--fg-muted);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+}
+.business-record-modal-close:hover { background: var(--fg-hover); color: var(--fg-text); }
+.business-record-modal-body { min-height: 0; flex: 1; overflow: auto; overscroll-behavior: contain; background: var(--fg-surface); }
+.business-record-modal-body > .crm-create-form,
+.business-record-modal-body > .crm-record-editor { margin: 0; border: 0; border-radius: 0; border-bottom: 0; padding: 18px 20px 20px; background: var(--fg-surface); }
+.business-record-modal-body > .crm-create-form,
+.business-record-modal-body > .crm-contact-modal-form,
+.business-record-modal-body > .crm-note-form,
+.business-record-modal-body > .crm-task-form,
+.business-record-modal-body > .crm-opportunity-form { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+.business-record-modal-body .crm-record-editor-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.business-record-modal-body .crm-wide-field { grid-column: 1 / -1; }
+.business-record-modal-body .crm-form-actions {
+  position: sticky;
+  bottom: -20px;
+  grid-column: 1 / -1;
+  margin: 8px -20px -20px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--fg-border);
+  background: color-mix(in srgb, var(--fg-surface) 96%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Batch 16: list record actions are deliberately first and remain visible while
+   wide business tables scroll horizontally. */
+.crm-leading-action-column {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  width: 92px;
+  min-width: 92px;
+  background: var(--fg-surface) !important;
+  box-shadow: 1px 0 0 var(--fg-border);
+}
+thead .crm-leading-action-column { z-index: 8; background: var(--fg-surface-soft) !important; }
+tbody tr:hover .crm-leading-action-column { background: var(--fg-hover) !important; }
+.crm-leading-action-column .text-action { white-space: nowrap; }
+.crm-note-card.crm-note-card-actions-first { grid-template-columns: auto 30px minmax(0, 1fr); }
+.crm-note-leading-action { align-self: center; white-space: nowrap; }
+
+@media (max-width: 720px) {
+  .business-record-modal-backdrop { padding: 10px; }
+  .business-record-modal,
+  .business-record-modal-large,
+  .business-record-modal-medium { width: calc(100vw - 20px); max-height: calc(100vh - 20px); border-radius: 11px; }
+  .business-record-modal-body > .crm-create-form,
+  .business-record-modal-body > .crm-record-editor,
+  .business-record-modal-body > .crm-contact-modal-form,
+  .business-record-modal-body > .crm-note-form,
+  .business-record-modal-body > .crm-task-form,
+  .business-record-modal-body > .crm-opportunity-form,
+  .business-record-modal-body .crm-record-editor-fields { grid-template-columns: 1fr; }
+  .business-record-modal-body .crm-form-actions { grid-column: auto; }
+  .crm-note-card.crm-note-card-actions-first { grid-template-columns: auto 28px minmax(0, 1fr); }
+}

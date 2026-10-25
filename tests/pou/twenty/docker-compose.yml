@@ -1,0 +1,149 @@
+name: gbap-twenty-pou
+
+x-twenty-runtime: &twenty_runtime
+  image: gbap/twenty:v2.37.0-view-rest-auth-context-v1
+  build:
+    context: ../../..
+    dockerfile: infrastructure/twenty-production/Dockerfile.twenty-v2.37.0-gbap
+    args:
+      TWENTY_BASE_IMAGE: twentycrm/twenty:${TWENTY_TAG:-v2.37.0}
+    pull: false
+    network: none
+  pull_policy: build
+
+services:
+  twenty-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: default
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - twenty-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d default"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+    networks: [twenty]
+
+  twenty-redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--maxmemory-policy", "noeviction"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+    networks: [twenty]
+
+  twenty-server:
+    <<: *twenty_runtime
+    environment: &twenty_env
+      NODE_PORT: "3000"
+      PG_DATABASE_URL: postgres://postgres:postgres@twenty-db:5432/default
+      SERVER_URL: http://localhost:3000
+      REDIS_URL: redis://twenty-redis:6379
+      STORAGE_TYPE: local
+      ENCRYPTION_KEY: Z2JhcC10d2VudHktcG91LWVuY3J5cHRpb24ta2V5LTIwMjY=
+      APP_SECRET: Z2JhcC10d2VudHktcG91LWFwcC1zZWNyZXQtMjAyNi0wOC0zMQ==
+      AUTH_PASSWORD_ENABLED: "true"
+      IS_EMAIL_VERIFICATION_REQUIRED: "false"
+      IS_WORKSPACE_CREATION_LIMITED_TO_SERVER_ADMINS: "false"
+      IS_MULTIWORKSPACE_ENABLED: "false"
+      IS_BILLING_ENABLED: "false"
+      EMAIL_DRIVER: LOGGER
+    volumes:
+      - twenty-server-data:/app/packages/twenty-server/.local-storage
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      twenty-db:
+        condition: service_healthy
+      twenty-redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:3000/healthz || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+    restart: unless-stopped
+    networks: [twenty]
+
+  twenty-worker:
+    <<: *twenty_runtime
+    command: ["yarn", "worker:prod"]
+    environment:
+      <<: *twenty_env
+      DISABLE_DB_MIGRATIONS: "true"
+      DISABLE_CRON_JOBS_REGISTRATION: "true"
+    volumes:
+      - twenty-server-data:/app/packages/twenty-server/.local-storage
+    depends_on:
+      twenty-server:
+        condition: service_started
+    restart: unless-stopped
+    networks: [twenty]
+
+  twenty-mail-calendar-readonly-bootstrap:
+    # Reuse the postgres image already materialized by twenty-db.  This helper
+    # is deliberately local-only so governed CI never gains a registry fallback.
+    image: "postgres:16"
+    pull_policy: never
+    entrypoint: ["/bin/bash", "/bootstrap/bootstrap-twenty-mail-calendar-readonly.sh"]
+    environment:
+      UAT_TWENTY_DB_PASSWORD: postgres
+      UAT_TWENTY_ADAPTER_DB_PASSWORD: gbap-ci-readonly-password
+    volumes:
+      - ../../../infrastructure/local-uat/bootstrap-twenty-mail-calendar-readonly.sh:/bootstrap/bootstrap-twenty-mail-calendar-readonly.sh:ro
+    depends_on:
+      twenty-db:
+        condition: service_healthy
+      twenty-server:
+        condition: service_healthy
+    restart: "no"
+    networks: [twenty]
+
+  twenty-adapter:
+    build: ../../../providers/twenty-adapter
+    environment:
+      PORT: "8091"
+      TWENTY_URL: http://twenty-server:3000
+      TWENTY_API_KEY_FILE: /run/secrets/twenty-api-key
+      TWENTY_DATABASE_URL: postgres://gbap_adapter_readonly:gbap-ci-readonly-password@twenty-db:5432/default
+      TWENTY_REQUEST_TIMEOUT_MS: "7000"
+      TWENTY_BRIDGE_SECRET: "gbap-twenty-pou-mail-calendar-bridge-secret-v1"
+      TWENTY_PROVISIONER_EMAIL: gbap-pou-${GITHUB_RUN_ID:-local}@example.com
+      TWENTY_PROVISIONER_PASSWORD: "GbapTwentyPoU-2026!"
+      TWENTY_AUTH_ORIGIN: http://localhost:${GBAP_CI_TWENTY_PORT:-3000}
+      GBAP_DB_PATH: /data/substrate.db
+      GBAP_PROVIDER_ID: twenty-crm-pou
+    volumes:
+      - ./.runtime/twenty-api-key:/run/secrets/twenty-api-key:ro
+      # Keep PoU principal/provider mappings GBAP-owned but isolated from
+      # both developer and company UAT substrate state.
+      - gbap-provider-mapping-data:/data
+    depends_on:
+      twenty-server:
+        condition: service_healthy
+      twenty-mail-calendar-readonly-bootstrap:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    networks:
+      twenty: {}
+      gbap:
+        aliases:
+          - twenty-adapter
+
+volumes:
+  twenty-db-data:
+  twenty-server-data:
+  gbap-provider-mapping-data:
+
+networks:
+  twenty:
+  gbap:
+    external: true
+    name: global-business-ai-platform_default

@@ -1,0 +1,160 @@
+.customer-company-table th.customer-resizable-column {
+  position: sticky;
+  overflow: visible;
+}
+
+.customer-column-resizer {
+  position: absolute;
+  top: 0;
+  right: -6px;
+  z-index: 12;
+  width: 13px;
+  height: 100%;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+}
+
+.customer-column-resizer::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  left: 6px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--fg-border-strong, rgba(148, 163, 184, 0.35));
+  transition: background .12s ease, width .12s ease;
+}
+
+.customer-company-table th:hover .customer-column-resizer::after,
+.customer-column-resizer:hover::after,
+.customer-column-resizer:active::after {
+  width: 3px;
+  background: #5d8ff0;
+}
+
+.customer-company-table th[data-user-width='true'],
+.customer-company-table td[data-user-width='true'] {
+  overflow: hidden;
+}
+
+.customer-company-table th,
+.customer-company-table td {
+  box-sizing: border-box;
+}
+
+.customer-table-top-scroll {
+  width: 100%;
+  height: 15px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0 0 4px;
+  border-top: 1px solid var(--fg-border-subtle, rgba(148, 163, 184, 0.16));
+  border-bottom: 1px solid var(--fg-border-subtle, rgba(148, 163, 184, 0.16));
+  background: var(--fg-surface, transparent);
+  scrollbar-gutter: stable;
+}
+
+.customer-table-top-scroll > div {
+  height: 1px;
+}
+
+.customer-table-scroll {
+  overflow-x: auto;
+  scrollbar-gutter: stable;
+}
+
+.top500-company-table {
+  table-layout: fixed;
+}
+
+.top500-company-table th > button,
+.top500-company-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.top500-company-table td a {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.top500-company-table td[data-top500-cell='公司名称'] .customer-name-cell > div,
+.top500-company-table td[data-top500-cell='公司名称'] .customer-name-cell strong,
+.top500-company-table td[data-top500-cell='公司名称'] .customer-name-cell small {
+  max-width: 100%;
+}
+
+.customer-pagination {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 14px;
+  border-top: 1px solid var(--fg-border, #e7e9ee);
+  background: var(--fg-surface, #fff);
+  color: var(--fg-muted, #697386);
+  font-size: 11px;
+}
+
+.customer-pagination > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.customer-pagination button,
+.customer-pagination input {
+  min-height: 30px;
+  box-sizing: border-box;
+  border: 1px solid var(--fg-border, #dfe3e8);
+  border-radius: 7px;
+  background: var(--fg-surface, #fff);
+  color: var(--fg-text, #172033);
+  font: inherit;
+  font-size: 11px;
+}
+
+.customer-pagination button {
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.customer-pagination button:hover:not(:disabled) {
+  border-color: var(--fg-border-strong, #b9c1cc);
+  background: var(--fg-hover, #f2f5f8);
+}
+
+.customer-pagination button:disabled {
+  opacity: .42;
+  cursor: not-allowed;
+}
+
+.customer-pagination label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.customer-pagination input {
+  width: 56px;
+  padding: 0 6px;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .customer-pagination {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .customer-pagination > div {
+    flex-wrap: wrap;
+  }
+}
